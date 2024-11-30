@@ -1,5 +1,6 @@
 package com.example.android_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -17,6 +18,8 @@ class LessonActivity: AppCompatActivity() {
 
         val cardContainer = findViewById<LinearLayout>(R.id.cardContainer)
         val db = MainDb.getDb(applicationContext)
+
+
 
         // Получаем данные из БД
         lifecycleScope.launch {
@@ -71,6 +74,12 @@ class LessonActivity: AppCompatActivity() {
                 // Добавляем кнопку
                 val button = Button(this@LessonActivity).apply {
                     text = "Перейти"
+                    setOnClickListener {
+                        // Переход на активность с упражнениями, передаем id занятия
+                        val intent = Intent(this@LessonActivity, ExerciseActivity::class.java)
+                        intent.putExtra("lesson_id", lesson.id)  // Передаем id занятия
+                        startActivity(intent)
+                    }
                     //Тут будет переход на занятие
                 }
 

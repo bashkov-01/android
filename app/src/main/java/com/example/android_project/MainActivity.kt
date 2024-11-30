@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import com.example.android_project.dao.ExerciseDao
+import com.example.android_project.models.Exercise
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +18,10 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this@MainActivity, UserActivity::class.java)
         startActivity(intent)
+
+
+
+
 
         // Получаем доступ к базе данных
 //        val db = MainDb.getDb(applicationContext)
@@ -39,4 +47,7 @@ class MainActivity : AppCompatActivity() {
 //        startActivity(intent)
 
     }
+
+
+
 }

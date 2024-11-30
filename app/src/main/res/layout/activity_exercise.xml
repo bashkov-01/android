@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="350dp"
+        android:layout_height="198dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="350dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="37dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/videoView" />
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="350dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="43dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="61dp"
+        android:text="Button"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
+        tools:layout_editor_absoluteX="158dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
