@@ -4,6 +4,11 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
+    <style name="Button" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="backgroundColor">#2E4052</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
     <style name="Theme.Android_Project" parent="Base.Theme.Android_Project" />
 </resources>
