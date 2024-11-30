@@ -1,12 +1,17 @@
 package com.example.android_project.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.example.android_project.models.Exercise
 
 @Dao
 interface ExerciseDao {
+    @Insert
+    suspend fun insertExercises(exercises: List<Exercise>)
 
+    @Query("SELECT * FROM exercise WHERE lessonId = :lessonId")
+    suspend fun getExercisesByLessonId(lessonId: Int): List<Exercise>
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    suspend fun insertExercise(exercise: com.example.android_project.models.Exercise): Long
 
