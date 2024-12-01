@@ -1,25 +1,28 @@
 package com.example.android_project
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-class LessonActivity: AppCompatActivity() {
+class LessonActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson)
 
         val cardContainer = findViewById<LinearLayout>(R.id.cardContainer)
         val db = MainDb.getDb(applicationContext)
-
-
 
         // Получаем данные из БД
         lifecycleScope.launch {
@@ -30,6 +33,7 @@ class LessonActivity: AppCompatActivity() {
                 val lesson = lessonList[index]
                 val imageName = "picture${index + 1}"
                 val imageResId = resources.getIdentifier(imageName, "drawable", packageName)
+
                 // Создаем карточку
                 val cardView = CardView(this@LessonActivity).apply {
                     layoutParams = LinearLayout.LayoutParams(
@@ -38,29 +42,76 @@ class LessonActivity: AppCompatActivity() {
                     ).apply {
                         setMargins(0, 0, 0, 16)
                     }
-                    radius = 16f
+                    radius = 24f
                     cardElevation = 8f
+                    setCardBackgroundColor(Color.parseColor("#EFF7FF"))
                 }
 
                 // Создаем макет содержимого карточки
                 val cardContent = LinearLayout(this@LessonActivity).apply {
-                    orientation = LinearLayout.VERTICAL
+                    orientation = LinearLayout.HORIZONTAL
                     setPadding(16, 16, 16, 16)
                 }
 
                 // Добавляем изображение
                 val imageView = ImageView(this@LessonActivity).apply {
                     layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        200
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        3f // Задаем вес 1 для изображения
                     )
+                    adjustViewBounds = true
                     setImageResource(imageResId)
                 }
+
+                // Создаем вертикальный макет для текстовых полей и кнопки
+                val textLayout = LinearLayout(this@LessonActivity).apply {
+                    orientation = LinearLayout.VERTICAL
+                    layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        2f // Задаем вес 3 для текстов и кнопки
+                    )
+                }
+                val timeCardContent = LinearLayout(this@LessonActivity).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    setPadding(4, 4, 4, 4)
+                }
+
+                val titleTimeView = TextView(this@LessonActivity).apply {
+                    //ВСТАВИТЬ МИНУТЫ
+                    text = "10 МИНУТ"
+                    textSize = 14f
+                    setTypeface(null, Typeface.NORMAL)
+                    setPadding(4, 4, 4, 4)
+                    layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        1f
+                    )
+                    background = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadius = 4f  // Закругленные углы
+                        setColor(Color.WHITE)  // Цвет фона
+                    }
+                }
+                val titleEmptyView = TextView(this@LessonActivity).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        1f
+                    )
+                }
+
+                timeCardContent.addView(titleTimeView)
+                timeCardContent.addView(titleEmptyView)
+                textLayout.addView(timeCardContent)
 
                 // Добавляем текстовое поле для названия
                 val titleTextView = TextView(this@LessonActivity).apply {
                     text = lesson.titleOfLesson
-                    textSize = 18f
+                    textSize = 20f
+                    setTypeface(null, Typeface.BOLD)
                     setPadding(0, 16, 0, 8)
                 }
 
@@ -72,22 +123,45 @@ class LessonActivity: AppCompatActivity() {
                 }
 
                 // Добавляем кнопку
-                val button = Button(this@LessonActivity).apply {
+                val button = AppCompatButton(this@LessonActivity).apply {
                     text = "Перейти"
+                    setBackgroundColor(Color.parseColor("#2E4052"))  // Устанавливаем цвет фона
+                    setTextColor(Color.WHITE)  // Устанавливаем цвет текста
+                    setPadding(0, 16, 0, 16)  // Устанавливаем padding для кнопки
+
+                    // Устанавливаем параметры разметки
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        gravity = Gravity.CENTER_HORIZONTAL  // Размещаем кнопку по центру
+                        setMargins(0, 16, 0, 0)  // Добавляем внешние отступы
+                    }
+
+                    // Устанавливаем закругленные углы
+                    background = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadius = 16f  // Закругленные углы
+                        setColor(Color.parseColor("#2E4052"))  // Цвет фона
+                    }
+
                     setOnClickListener {
                         // Переход на активность с упражнениями, передаем id занятия
                         val intent = Intent(this@LessonActivity, ExerciseActivity::class.java)
                         intent.putExtra("lesson_id", lesson.id)  // Передаем id занятия
                         startActivity(intent)
                     }
-                    //Тут будет переход на занятие
                 }
 
-                // Добавляем все элементы в содержимое карточки
+                // Добавляем текстовые поля и кнопку в вертикальный макет
+                textLayout.addView(titleTextView)
+                textLayout.addView(descriptionTextView)
+                textLayout.addView(button)
+
+                // Добавляем изображение и текстовый макет в содержимое карточки
+
+                cardContent.addView(textLayout)
                 cardContent.addView(imageView)
-                cardContent.addView(titleTextView)
-                cardContent.addView(descriptionTextView)
-                cardContent.addView(button)
 
                 // Добавляем содержимое в карточку
                 cardView.addView(cardContent)
