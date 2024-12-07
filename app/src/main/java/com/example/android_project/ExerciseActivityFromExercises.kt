@@ -5,7 +5,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,13 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ExerciseActivity : AppCompatActivity() {
+class ExerciseActivityFromExercises : AppCompatActivity() {
     private var timer: CountDownTimer? = null
     private lateinit var textViewTitle: TextView
     private lateinit var textViewDescription: TextView
     private lateinit var button: Button
     private lateinit var gifImageView: ImageView
-    private lateinit var ImageViewNumberExercise: ImageView
     private var lessonId = 0
 
     private var currentExerciseIndex = 0  // Текущий индекс упражнения
@@ -32,19 +30,17 @@ class ExerciseActivity : AppCompatActivity() {
     private var isPaused = false // Флаг паузы
     private var timeLeftInMillis: Long = 0 // Оставшееся время на таймере
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exercise)
+        setContentView(R.layout.activity_exercise_from_exercises)
 
         gifImageView = findViewById(R.id.gifImage)
         textViewTitle = findViewById(R.id.textViewTitle)
         textViewDescription = findViewById(R.id.textViewDescription)
         button = findViewById(R.id.button2)
-        ImageViewNumberExercise = findViewById(R.id.imageView)
 
         // Получаем id занятия, переданный через Intent
-        lessonId = intent.getIntExtra("lesson_id", -1)
+        lessonId = intent.getIntExtra("lesson_id_from_exercises", -1)
 
         if (lessonId != -1) {
             val exerciseDao = MainDb.getDb(this).exerciseDao()
@@ -145,7 +141,8 @@ class ExerciseActivity : AppCompatActivity() {
             .setMessage("Поздравляем! Вы успешно завершили упражнение.")
             .setPositiveButton("ОК") { dialog, _ ->
                 dialog.dismiss() // Закрыть диалог
-                moveToNextExercise() // Переход к следующему упражнению
+                val intent = Intent(this@ExerciseActivityFromExercises, ExercisesActivity::class.java)
+                startActivity(intent)
             }
             .setCancelable(false) // Блокировка закрытия окна вне кнопки
 
@@ -194,24 +191,8 @@ class ExerciseActivity : AppCompatActivity() {
         val gifResource = exercise.animationOfExercise
             .substringBefore(".")
             .substringAfter("app/src/main/res/raw/")  // Извлекаем имя файла
-        Log.d("index_working",currentExerciseIndex.toString())
-        if(currentExerciseIndex == 0)
-        {
-            ImageViewNumberExercise.setImageResource(R.drawable.first_exercies)
-            Log.d("index","1")
-        }
-        if(currentExerciseIndex == 1)
-        {
-            ImageViewNumberExercise.setImageResource(R.drawable.second_exercise)
-            Log.d("index","2")
-        }
-        if(currentExerciseIndex == 2)
-        {
-            ImageViewNumberExercise.setImageResource(R.drawable.photo_5402387981953787114_x)
-            Log.d("index","3")
-        }
 
-        Glide.with(this@ExerciseActivity)
+        Glide.with(this@ExerciseActivityFromExercises)
             .asGif()
             .load("android.resource://${packageName}/raw/$gifResource")
             .into(gifImageView)
@@ -219,20 +200,5 @@ class ExerciseActivity : AppCompatActivity() {
         button.text = "Начать"
         timer = null // Сбрасываем таймер
         stopAudio()
-
-    }
-
-    //Переходит к следующему упражнению в списке.
-    //Если упражнение — последнее, активность переключается на экран с занятиями,
-    //передавая ID текущего занятия.
-    private fun moveToNextExercise() {
-        if (currentExerciseIndex < exercises.size - 1) {
-            currentExerciseIndex++
-            showExercise(currentExerciseIndex)
-        } else {
-            val intent = Intent(this@ExerciseActivity, LessonActivity::class.java)
-            intent.putExtra("lesson_id_exercise", lessonId)  // Передаем id занятия
-            startActivity(intent)
-        }
     }
 }

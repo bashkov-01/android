@@ -1,32 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- Карточки упражнений будут добавляться динамически сюда -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFF7FF">
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="365dp"
-        android:layout_height="144dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="j"
-        android:scaleType="fitStart"
-        android:src="@drawable/img_2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.156"
-        tools:srcCompat="@drawable/img_2" />
+    android:background="@color/backColor">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter"
-        android:text="Приветствуем!"
+        android:text="Упражнения"
         android:textColor="@color/textColor"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -34,40 +19,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.064" />
+        app:layout_constraintVertical_bias="0.018" />
 
-    <!-- Оборачиваем ScrollView в FrameLayout -->
-    <FrameLayout
-        android:id="@+id/scrollViewContainer"
-        android:layout_width="412dp"
-        android:layout_height="587dp"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/rounded_scrollview_background"
-        android:backgroundTint="@color/white"
+    <ScrollView
+        android:layout_width="402dp"
+        android:layout_height="776dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:contentDescription="jkhjk"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        app:layout_constraintVertical_bias="0.127">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.615">
 
-        <ScrollView
-            android:id="@+id/scrollView2"
+        <LinearLayout
+            android:id="@+id/cardContainerAll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="asd">
+            android:layout_height="wrap_content"
+            android:background="@color/backColor"
+            android:backgroundTint="@color/backColor"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <LinearLayout
-                android:id="@+id/cardContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="64dp"
-                android:orientation="vertical" />
-        </ScrollView>
-    </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="412dp"
         android:layout_height="73dp"
         android:layout_marginEnd="1dp"

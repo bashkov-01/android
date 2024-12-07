@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
 
-        val intent = Intent(this@MainActivity, UserActivity::class.java)
+        val intent = Intent(this@MainActivity, LessonActivity::class.java)
         startActivity(intent)
 
         // Получаем доступ к базе данных

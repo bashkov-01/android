@@ -7,18 +7,27 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.cardview.widget.CardView
+import androidx.collection.objectListOf
 import androidx.core.view.marginTop
 import androidx.lifecycle.lifecycleScope
+import com.example.android_project.dao.ExerciseDao
+import com.example.android_project.dao.LessonDao
+import com.example.android_project.dao.UserDao
+import com.example.android_project.models.Lesson
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.withIndex
 import kotlinx.coroutines.launch
 
 class LessonActivity : AppCompatActivity() {
     private var lessonId = 0
+    private var userList = 0
 
     private val sharedPreferences by lazy {
         getSharedPreferences("lessons", MODE_PRIVATE)
@@ -27,8 +36,34 @@ class LessonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson)
 
+        val buttonMain = findViewById<ImageButton>(R.id.buttonMain)
+        val buttonExercises = findViewById<ImageButton>(R.id.buttonExercise)
+        /*buttonMain.text = "V"*/
+
         val cardContainer = findViewById<LinearLayout>(R.id.cardContainer)
+        val imageButtonLesson = findViewById<ImageButton>(R.id.imageButton)
         val db = MainDb.getDb(applicationContext)
+
+        buttonExercises.setOnClickListener {
+            val intent = Intent(this@LessonActivity, ExercisesActivity::class.java)
+            startActivity(intent)
+        }
+
+        lifecycleScope.launch {
+            userList = db.userDao().getUserCount()//Проверяем на наличие анкеты в БД
+            if(userList == 0)//Если анкеты нет, значит пользователь не проходил анкету
+            {
+                imageButtonLesson.setOnClickListener {
+                    val intent = Intent(this@LessonActivity, UserActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            else//Если пользователь заполнил анкету, то у него данный блок не кликабельный и выводятся только его занятия, а не все.
+            {
+                imageButtonLesson.tooltipText = "Ваши занятия готовы! Они помогут снять усталось с глаз и улучшить зрение !"
+            }
+        }
 
         lessonId = intent.getIntExtra("lesson_id_exercise", -1)
         if (lessonId != -1) {
@@ -37,7 +72,21 @@ class LessonActivity : AppCompatActivity() {
 
         // Получаем данные из БД
         lifecycleScope.launch {
-            val lessonList = db.lessonDao().getAllLessons()
+            val userDao = db.userDao()
+            val exerciseDao = db.exerciseDao()
+            val lessonDao = db.lessonDao()
+
+            val matchingLessonIds = getMatchingLessonIds(userDao, exerciseDao)
+//            println("Matching Lesson IDs: $matchingLessonIds") // Логи ID уроков
+
+            val lessonList = if (userList == 0) {
+                lessonDao.getAllLessons()
+            } else {
+                lessonDao.getLessonsByLessonId(matchingLessonIds).also {
+//                    println("Filtered Lessons: $it") // Логи отфильтрованных уроков
+                    imageButtonLesson.setImageResource(R.drawable.img_3)
+                }
+            }
 
             // Создаем карточки для каждого занятия
             for (index in lessonList.indices) {
@@ -196,6 +245,22 @@ class LessonActivity : AppCompatActivity() {
             }
         }
     }
+    suspend fun getMatchingLessonIds(
+        userDao: UserDao,
+        exerciseDao: ExerciseDao
+    ): List<Int> {
+        // Шаг 1: Получаем значение isStrobism из первой записи таблицы user
+        val userIsStrobism = userDao.getAllUsers()
+            .first()
+            .firstOrNull()?.isStrobism
+            ?: return emptyList() // Если пользователя нет, возвращаем пустой список
+
+        // Шаг 2: Фильтруем упражнения и берем lessonID
+        return exerciseDao.getAllExercises()
+            .filter { it.isStrobism == userIsStrobism }
+            .map { it.lessonId }
+    }
+
 
     // Метод для пометки занятия как выполненного
     private fun markLessonAsCompleted(lessonId: Int) {
