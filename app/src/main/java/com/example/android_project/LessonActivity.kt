@@ -17,12 +17,22 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 class LessonActivity : AppCompatActivity() {
+    private var lessonId = 0
+
+    private val sharedPreferences by lazy {
+        getSharedPreferences("lessons", MODE_PRIVATE)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson)
 
         val cardContainer = findViewById<LinearLayout>(R.id.cardContainer)
         val db = MainDb.getDb(applicationContext)
+
+        lessonId = intent.getIntExtra("lesson_id_exercise", -1)
+        if (lessonId != -1) {
+            markLessonAsCompleted(lessonId)
+        }
 
         // Получаем данные из БД
         lifecycleScope.launch {
@@ -124,32 +134,46 @@ class LessonActivity : AppCompatActivity() {
 
                 // Добавляем кнопку
                 val button = AppCompatButton(this@LessonActivity).apply {
-                    text = "Перейти"
-                    setBackgroundColor(Color.parseColor("#2E4052"))  // Устанавливаем цвет фона
-                    setTextColor(Color.WHITE)  // Устанавливаем цвет текста
-                    setPadding(0, 16, 0, 16)  // Устанавливаем padding для кнопки
-
-                    // Устанавливаем параметры разметки
-                    layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    ).apply {
-                        gravity = Gravity.CENTER_HORIZONTAL  // Размещаем кнопку по центру
-                        setMargins(0, 16, 0, 0)  // Добавляем внешние отступы
+                    val isCompleted = isLessonCompleted(lesson.id)
+                    if (isCompleted) {
+                        text = "Выполнено"
+                        isEnabled = false  // Делаем кнопку недоступной
+                        setTextColor(Color.GRAY)  // Цвет текста
+                        background = GradientDrawable().apply {
+                            shape = GradientDrawable.RECTANGLE
+                            cornerRadius = 16f
+                            setColor(Color.LTGRAY)  // Серый фон для неактивной кнопки
+                        }
                     }
+                    else
+                    {
+                        text = "Перейти"
+                        setBackgroundColor(Color.parseColor("#2E4052"))  // Устанавливаем цвет фона
+                        setTextColor(Color.WHITE)  // Устанавливаем цвет текста
+                        setPadding(0, 16, 0, 16)  // Устанавливаем padding для кнопки
 
-                    // Устанавливаем закругленные углы
-                    background = GradientDrawable().apply {
-                        shape = GradientDrawable.RECTANGLE
-                        cornerRadius = 16f  // Закругленные углы
-                        setColor(Color.parseColor("#2E4052"))  // Цвет фона
-                    }
+                        // Устанавливаем параметры разметки
+                        layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        ).apply {
+                            gravity = Gravity.CENTER_HORIZONTAL  // Размещаем кнопку по центру
+                            setMargins(0, 16, 0, 0)  // Добавляем внешние отступы
+                        }
 
-                    setOnClickListener {
-                        // Переход на активность с упражнениями, передаем id занятия
-                        val intent = Intent(this@LessonActivity, ExerciseActivity::class.java)
-                        intent.putExtra("lesson_id", lesson.id)  // Передаем id занятия
-                        startActivity(intent)
+                        // Устанавливаем закругленные углы
+                        background = GradientDrawable().apply {
+                            shape = GradientDrawable.RECTANGLE
+                            cornerRadius = 16f  // Закругленные углы
+                            setColor(Color.parseColor("#2E4052"))  // Цвет фона
+                        }
+
+                        setOnClickListener {
+                            // Переход на активность с упражнениями, передаем id занятия
+                            val intent = Intent(this@LessonActivity, ExerciseActivity::class.java)
+                            intent.putExtra("lesson_id", lesson.id)  // Передаем id занятия
+                            startActivity(intent)
+                        }
                     }
                 }
 
@@ -170,5 +194,17 @@ class LessonActivity : AppCompatActivity() {
                 cardContainer.addView(cardView)
             }
         }
+    }
+
+    // Метод для пометки занятия как выполненного
+    private fun markLessonAsCompleted(lessonId: Int) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("lesson_$lessonId", true)
+        editor.apply()
+    }
+
+    // Метод для проверки, выполнено ли занятие
+    private fun isLessonCompleted(lessonId: Int?): Boolean {
+        return sharedPreferences.getBoolean("lesson_$lessonId", false)
     }
 }

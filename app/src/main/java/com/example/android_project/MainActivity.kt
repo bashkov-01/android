@@ -12,16 +12,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
 
         val intent = Intent(this@MainActivity, UserActivity::class.java)
         startActivity(intent)
-
-
-
-
 
         // Получаем доступ к базе данных
 //        val db = MainDb.getDb(applicationContext)
@@ -47,7 +44,4 @@ class MainActivity : AppCompatActivity() {
 //        startActivity(intent)
 
     }
-
-
-
 }

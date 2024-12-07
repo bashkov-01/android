@@ -5,23 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="353dp"
-        android:layout_height="221dp"
-        android:layout_gravity="center"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121">
 
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_width="353dp"
-            android:layout_height="222dp" />
-    </androidx.cardview.widget.CardView>
-
+    
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="325dp"
@@ -79,5 +64,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.426" />
+
+    <ImageView
+        android:id="@+id/gifImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="49dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
