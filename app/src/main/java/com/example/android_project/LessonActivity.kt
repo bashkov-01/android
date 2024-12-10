@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.cardview.widget.CardView
+import androidx.core.view.marginTop
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
@@ -50,10 +51,10 @@ class LessonActivity : AppCompatActivity() {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     ).apply {
-                        setMargins(0, 0, 0, 16)
+                        setMargins(20, 0, 20, 32)
                     }
                     radius = 24f
-                    cardElevation = 8f
+                    cardElevation = 0f  // Убираем тень
                     setCardBackgroundColor(Color.parseColor("#EFF7FF"))
                 }
 
@@ -61,7 +62,7 @@ class LessonActivity : AppCompatActivity() {
                 val cardContent = LinearLayout(this@LessonActivity).apply {
                     orientation = LinearLayout.HORIZONTAL
                     setPadding(16, 16, 16, 16)
-                }
+            }
 
                 // Добавляем изображение
                 val imageView = ImageView(this@LessonActivity).apply {
