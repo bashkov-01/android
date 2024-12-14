@@ -22,8 +22,8 @@ class UserActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
 
-//        val db = MainDb.getDb(applicationContext)
-//        val exerciseDao = db.exerciseDao()
+//        val dbs = MainDb.getDb(applicationContext)
+//        val exerciseDao = dbs.exerciseDao()
 //
 //        insertExercise(exerciseDao)
 
@@ -33,7 +33,7 @@ class UserActivity: AppCompatActivity() {
         val listOfStrobism: Spinner = findViewById(R.id.listStrobism)//Стробизм
         val listOfCountTime: Spinner = findViewById(R.id.listCountOfTime)//Кол-во времени
         val button: Button = findViewById(R.id.button)
-
+//
         val itemsExerciseLoad = listOf("Компьютер", "Книги", "Телефон")
         val itemsCategory = listOf("Короткие", "Длинные")
         val itemsStrobism = listOf("Есть", "Нет")
@@ -44,7 +44,7 @@ class UserActivity: AppCompatActivity() {
         listOfStrobism.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, itemsStrobism)
         listOfCountTime.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, itemsCountOfTime)
 
-        // Обработчик нажатия на кнопку
+//         Обработчик нажатия на кнопку
         button.setOnClickListener {
             // Получаем выбранные значения из Spinner
             val selectedExerciseLoad = listOfExerciseLoad.selectedItem.toString()
@@ -64,7 +64,7 @@ class UserActivity: AppCompatActivity() {
                 countOfTime = selectedCountTime          // Пример времени
             )
 
-            // Вставка пользователя в базу данных в фоновом потоке
+//             Вставка пользователя в базу данных в фоновом потоке
             lifecycleScope.launch {
 //                db.userDao().getAllUsers()
                 db.userDao().insertUser(user)
@@ -314,8 +314,27 @@ class UserActivity: AppCompatActivity() {
                     lessonId = 6
                 )
             )
-
             exerciseDao.insertExercises(exercises)
         }
     }
 }
+
+//INSERT INTO Exercise (title, description, picture, animation, timer, sound, isStrobism, exerciseLoad, categoryExercise, countOfTime, lessonId) VALUES
+//('Жмурки', 'Крепко закройте глаза на 3-5 секунд. Повторите 6-8 раз.', '', 'app/src/main/res/raw/video1.gif', 60, 'app/src/main/res/raw/audio1.mp3', 1, 'Компьютер', 'Короткие', '2-4', 1),
+//('Переносица', 'Смотреть прямо перед собой 2-3 сек. Сводим зрачки к переносице изо всех сил, приблизив палец к носу 3-5 сек. Повторить 10-12 раз.', '', 'app/src/main/res/raw/video2.gif', 60, 'app/src/main/res/raw/audio2.mp3', 1, 'Книги', 'Длинные', '2-4', 1),
+//('Пол – потолок - стены', 'Медленно переводите взгляд с пола на потолок, вправо, влево и обратно, не меняя положения головы.', '', 'app/src/main/res/raw/video3.gif', 60, 'app/src/main/res/raw/audio3.mp3', 1, 'Телефон', 'Длинные', '4-6', 1),
+//('Шторки', 'Быстро и легко моргайте 2 минуты. Это упражнение способствует улучшению кровообращения.', '', 'app/src/main/res/raw/video4.gif', 60, 'app/src/main/res/raw/audio4.mp3', 0, 'Компьютер', 'Короткие', '6-8', 2),
+//('Часики', 'Перемещайте взгляд в разных направлениях: по кругу – по часовой стрелке и против.', '', 'app/src/main/res/raw/video5.gif', 60, 'app/src/main/res/raw/audio5.mp3', 0, 'Компьютер', 'Короткие', '6-8', 2),
+//('Стреляем глазками', 'Вверх – влево, вниз – право и наоборот. Упражнение укрепляет мышцы глаз.', '', 'app/src/main/res/raw/video6.gif', 60, 'app/src/main/res/raw/audio6.mp3', 0, 'Компьютер', 'Короткие', '6-8', 2),
+//('Удивление', 'Зажмуриваем глаза на пять секунд и широко распахивает веки.', '', 'app/src/main/res/raw/video7.gif', 60, 'app/src/main/res/raw/audio7.mp3', 1, 'Компьютер', 'Короткие', '6-8', 3),
+//('Метка на стекле', 'Определяем точку на стекле, затем переводим взгляд на далекий объект.', '', 'app/src/main/res/raw/video8.gif', 60, 'app/src/main/res/raw/audio8.mp3', 1, 'Компьютер', 'Короткие', '6-8', 3),
+//('Массаж', 'Тремя пальцами каждой руки легко нажмите на верхние веки.', '', 'app/src/main/res/raw/video9.gif', 60, 'app/src/main/res/raw/audio9.mp3', 1, 'Компьютер', 'Короткие', '6-8', 3),
+//('Восьмерка', 'Медленно водите взглядом по контуру восьмерки.', '', 'app/src/main/res/raw/video10.gif', 60, 'app/src/main/res/raw/audio10.mp3', 0, 'Компьютер', 'Короткие', '6-8', 4),
+//('Рыбка', 'Попробуйте широко распахнуть глаза, смотря вверх и вниз.', '', 'app/src/main/res/raw/video11.gif', 60, 'app/src/main/res/raw/audio11.mp3', 0, 'Телефон', 'Короткие', '6-8', 4),
+//('Моргаем', 'Сильно моргайте, чтобы активировать кровообращение в глазах.', '', 'app/src/main/res/raw/video12.gif', 60, 'app/src/main/res/raw/audio12.mp3', 1, 'Телефон', 'Длинные', '2-4', 5),
+//('Лабиринт', 'Следите за точкой в центре лабиринта.', '', 'app/src/main/res/raw/video13.gif', 60, 'app/src/main/res/raw/audio13.mp3', 1, 'Телефон', 'Длинные', '2-4', 5),
+//('Вращение глаз', 'Переводим взгляд по кругу, не меняя положения головы.', '', 'app/src/main/res/raw/video14.gif', 60, 'app/src/main/res/raw/audio14.mp3', 0, 'Компьютер', 'Длинные', '6-8', 5),
+//('Внимание', 'Сосредоточьтесь на каком-либо объекте в комнате или на экране.', '', 'app/src/main/res/raw/video15.gif', 60, 'app/src/main/res/raw/audio15.mp3', 1, 'Компьютер', 'Длинные', '6-8', 6),
+//('Реакция', 'Отводите взгляд влево, вправо, вверх и вниз, сразу же возвращаясь в начальное положение.', '', 'app/src/main/res/raw/video16.gif', 60, 'app/src/main/res/raw/audio16.mp3', 0, 'Телефон', 'Длинные', '6-8', 6),
+//('Статика', 'Удерживайте взгляд на одном месте, не двигая головой, 3-5 секунд.', '', 'app/src/main/res/raw/video17.gif', 60, 'app/src/main/res/raw/audio17.mp3', 1, 'Телефон', 'Длинные', '6-8', 6),
+//('Фокус', 'Переводите взгляд с близких объектов на дальние.', '', 'app/src/main/res/raw/video18.gif', 60, 'app/src/main/res/raw/audio18.mp3', 1, 'Телефон', 'Длинные', '6-8', 6);

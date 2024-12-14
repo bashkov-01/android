@@ -1,6 +1,7 @@
 package com.example.android_project.dao
 
 import androidx.room.*
+import com.example.android_project.models.History
 import com.example.android_project.models.Lesson
 
 
@@ -25,4 +26,7 @@ interface LessonDao {
 
     @Query("SELECT * FROM lesson")
     suspend fun getAllLessons(): List<Lesson>
+
+    @Query("SELECT * FROM lesson WHERE id IN (:lessonId)")
+    suspend fun getLessonsByLessonId(lessonId: List<Int>): List<Lesson>
 }

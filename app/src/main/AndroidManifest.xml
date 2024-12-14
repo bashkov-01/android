@@ -23,6 +23,8 @@
         </activity>
 
         <activity android:name=".UserActivity"></activity>
+        <activity android:name=".ExercisesActivity"></activity>
+        <activity android:name=".ExerciseActivityFromExercises"></activity>
         <activity android:name=".LessonActivity"
             android:exported="true">
             <intent-filter>
