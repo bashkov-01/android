@@ -53,6 +53,7 @@ class LessonActivity : AppCompatActivity() {
             userList = db.userDao().getUserCount()//Проверяем на наличие анкеты в БД
             if(userList == 0)//Если анкеты нет, значит пользователь не проходил анкету
             {
+                imageButtonLesson.setImageResource(R.drawable.img_3)
                 imageButtonLesson.setOnClickListener {
                     val intent = Intent(this@LessonActivity, UserActivity::class.java)
                     startActivity(intent)
@@ -61,7 +62,7 @@ class LessonActivity : AppCompatActivity() {
 
             else//Если пользователь заполнил анкету, то у него данный блок не кликабельный и выводятся только его занятия, а не все.
             {
-                imageButtonLesson.tooltipText = "Ваши занятия готовы! Они помогут снять усталось с глаз и улучшить зрение !"
+                imageButtonLesson.setImageResource(R.drawable.anketa_gotova)
             }
         }
 
