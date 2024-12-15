@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- Карточки упражнений будут добавляться динамически сюда -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -106,3 +107,14 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardContainerAll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Карточки упражнений будут добавляться динамически сюда -->
+</LinearLayout>
+>>>>>>> origin/master
