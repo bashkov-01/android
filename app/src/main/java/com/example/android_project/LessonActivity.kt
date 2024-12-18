@@ -38,6 +38,7 @@ class LessonActivity : AppCompatActivity() {
 
         val buttonMain = findViewById<ImageButton>(R.id.buttonMain)
         val buttonExercises = findViewById<ImageButton>(R.id.buttonExercise)
+        val buttonStatistic = findViewById<ImageButton>(R.id.buttonStatistic)
         /*buttonMain.text = "V"*/
 
         val cardContainer = findViewById<LinearLayout>(R.id.cardContainer)
@@ -49,21 +50,26 @@ class LessonActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        buttonStatistic.setOnClickListener {
+            val intent = Intent(this@LessonActivity, StatistikaActivity::class.java)
+            startActivity(intent)
+        }
+
         lifecycleScope.launch {
             userList = db.userDao().getUserCount()//Проверяем на наличие анкеты в БД
             if(userList == 0)//Если анкеты нет, значит пользователь не проходил анкету
             {
-                imageButtonLesson.setImageResource(R.drawable.img_3)
+//                imageButtonLesson.setImageResource(R.drawable.anketa_gotova)
                 imageButtonLesson.setOnClickListener {
                     val intent = Intent(this@LessonActivity, UserActivity::class.java)
                     startActivity(intent)
                 }
             }
 
-            else//Если пользователь заполнил анкету, то у него данный блок не кликабельный и выводятся только его занятия, а не все.
-            {
-                imageButtonLesson.setImageResource(R.drawable.anketa_gotova)
-            }
+//            else if(userList > 0)//Если пользователь заполнил анкету, то у него данный блок не кликабельный и выводятся только его занятия, а не все.
+//            {
+//                imageButtonLesson.setImageResource(R.drawable.img_1)
+//            }
         }
 
         lessonId = intent.getIntExtra("lesson_id_exercise", -1)
@@ -81,11 +87,12 @@ class LessonActivity : AppCompatActivity() {
 //            println("Matching Lesson IDs: $matchingLessonIds") // Логи ID уроков
 
             val lessonList = if (userList == 0) {
+                imageButtonLesson.setImageResource(R.drawable.img_3)
                 lessonDao.getAllLessons()
             } else {
                 lessonDao.getLessonsByLessonId(matchingLessonIds).also {
 //                    println("Filtered Lessons: $it") // Логи отфильтрованных уроков
-                    imageButtonLesson.setImageResource(R.drawable.img_3)
+                    imageButtonLesson.setImageResource(R.drawable.anketa_gotova)
                 }
             }
 

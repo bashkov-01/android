@@ -1,6 +1,7 @@
 package com.example.android_project.dao
 
 import androidx.room.*
+import com.example.android_project.ExerciseStat
 import com.example.android_project.models.History
 
 @Dao
@@ -20,6 +21,9 @@ interface HistoryDao {
 
     @Query("SELECT * FROM history WHERE exerciseId = :exerciseId")
     suspend fun getHistoriesByExerciseId(exerciseId: Int): List<History>
+
+    @Query("SELECT date, COUNT(exerciseId) AS count FROM history GROUP BY date ORDER BY date ASC")
+    suspend fun getExercisesByDate(): List<ExerciseStat>
 
 //    @Transaction
 //    @Query("SELECT * FROM user WHERE id = :userId")
