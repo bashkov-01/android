@@ -17,13 +17,14 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.018" />
+        app:layout_constraintVertical_bias="0.065" />
 
     <ScrollView
-        android:layout_width="402dp"
-        android:layout_height="776dp"
+        android:layout_width="396dp"
+        android:layout_height="701dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:contentDescription="jkhjk"
@@ -47,9 +48,8 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="412dp"
-        android:layout_height="73dp"
+        android:layout_width="408dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="1dp"
         android:background="@color/white"
         android:gravity="center"
@@ -63,10 +63,10 @@
 
         <ImageButton
             android:id="@+id/buttonMain"
-            android:layout_width="3dp"
-            android:layout_height="70dp"
+            android:layout_width="4dp"
+            android:layout_height="44dp"
             android:layout_marginStart="16dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="@drawable/home"
             android:contentDescription="jkhk"
             android:text="Главная" />
@@ -75,14 +75,14 @@
             android:id="@+id/button6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="5" />
 
         <ImageButton
             android:id="@+id/buttonExercise"
             android:layout_width="3dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
-            android:background="@drawable/exercises"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:background="@drawable/exercises_active"
             android:contentDescription="khk"
             android:text="Упражнения" />
 
@@ -90,15 +90,16 @@
             android:id="@+id/button7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:background="#FFFFFF"
             android:backgroundTint="@color/white" />
 
         <ImageButton
             android:id="@+id/buttonStatistic"
             android:layout_width="22dp"
-            android:layout_height="66dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="2"
             android:background="@drawable/statistics"
             android:contentDescription="kljk"
             android:text="Статистика" />

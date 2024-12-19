@@ -52,7 +52,7 @@
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="612dp"
             android:contentDescription="asd">
 
             <LinearLayout
@@ -66,8 +66,8 @@
     </FrameLayout>
 
     <LinearLayout
-        android:layout_width="412dp"
-        android:layout_height="73dp"
+        android:layout_width="408dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="1dp"
         android:background="@color/white"
         android:gravity="center"
@@ -81,25 +81,27 @@
 
         <ImageButton
             android:id="@+id/buttonMain"
-            android:layout_width="3dp"
-            android:layout_height="70dp"
+            android:layout_width="4dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/home"
+            android:layout_weight="2"
+            android:background="@drawable/home_active"
+            android:backgroundTintMode="add"
             android:contentDescription="jkhk"
+            android:hapticFeedbackEnabled="false"
             android:text="Главная" />
 
         <TextView
             android:id="@+id/button6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="5" />
 
         <ImageButton
             android:id="@+id/buttonExercise"
             android:layout_width="3dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_weight="3"
             android:background="@drawable/exercises"
             android:contentDescription="khk"
             android:text="Упражнения" />
@@ -108,15 +110,16 @@
             android:id="@+id/button7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:background="#FFFFFF"
             android:backgroundTint="@color/white" />
 
         <ImageButton
             android:id="@+id/buttonStatistic"
             android:layout_width="22dp"
-            android:layout_height="66dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="2"
             android:background="@drawable/statistics"
             android:contentDescription="kljk"
             android:text="Статистика" />
