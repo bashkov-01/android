@@ -49,11 +49,13 @@
 
     <LinearLayout
         android:layout_width="408dp"
-        android:layout_height="56dp"
+        android:layout_height="76dp"
         android:layout_marginEnd="1dp"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
@@ -61,14 +63,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
+        <TextView
+            android:id="@+id/button6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <ImageButton
             android:id="@+id/buttonMain"
-            android:layout_width="4dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
             android:layout_weight="2"
             android:background="@drawable/home"
+            android:backgroundTintMode="add"
             android:contentDescription="jkhk"
+            android:hapticFeedbackEnabled="false"
             android:text="Главная" />
 
         <TextView
@@ -79,8 +88,8 @@
 
         <ImageButton
             android:id="@+id/buttonExercise"
-            android:layout_width="3dp"
-            android:layout_height="50dp"
+            android:layout_width="20dp"
+            android:layout_height="70dp"
             android:layout_weight="3"
             android:background="@drawable/exercises_active"
             android:contentDescription="khk"

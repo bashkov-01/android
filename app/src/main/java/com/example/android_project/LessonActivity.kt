@@ -105,10 +105,10 @@ class LessonActivity : AppCompatActivity() {
                 // Создаем карточку
                 val cardView = CardView(this@LessonActivity).apply {
                     layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        975,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     ).apply {
-                        setMargins(20, 0, 20, 32)
+                        setMargins(60, 0, 50, 64)
                     }
                     radius = 24f
                     cardElevation = 0f  // Убираем тень
@@ -118,7 +118,7 @@ class LessonActivity : AppCompatActivity() {
                 // Создаем макет содержимого карточки
                 val cardContent = LinearLayout(this@LessonActivity).apply {
                     orientation = LinearLayout.HORIZONTAL
-                    setPadding(16, 16, 16, 16)
+                    setPadding(30, 30, 30, 30)
             }
 
                 // Добавляем изображение
@@ -149,7 +149,7 @@ class LessonActivity : AppCompatActivity() {
                 val titleTimeView = TextView(this@LessonActivity).apply {
                     //ВСТАВИТЬ МИНУТЫ
                     text = "10 МИНУТ"
-                    textSize = 14f
+                    textSize = 12f
                     setTypeface(null, Typeface.NORMAL)
                     setPadding(4, 4, 4, 4)
                     layoutParams = LinearLayout.LayoutParams(
