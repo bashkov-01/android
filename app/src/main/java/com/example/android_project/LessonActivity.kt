@@ -32,10 +32,22 @@ class LessonActivity : AppCompatActivity() {
     private val sharedPreferences by lazy {
         getSharedPreferences("lessons", MODE_PRIVATE)
     }
+
+    // Метод для сброса выполненных занятий
+    private fun resetCompletedLessons() {
+        val editor = sharedPreferences.edit()
+        // Очистка всех ключей, связанных с выполненными занятиями
+        sharedPreferences.all.keys.filter { it.startsWith("lesson_") }.forEach {
+            editor.remove(it)
+        }
+        editor.apply()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson)
 
+        resetCompletedLessons()
         val buttonMain = findViewById<ImageButton>(R.id.buttonMain)
         val buttonExercises = findViewById<ImageButton>(R.id.buttonExercise)
         val buttonStatistic = findViewById<ImageButton>(R.id.buttonStatistic)
@@ -97,6 +109,7 @@ class LessonActivity : AppCompatActivity() {
             }
 
             // Создаем карточки для каждого занятия
+            // Создаем карточки для каждого занятия
             for (index in lessonList.indices) {
                 val lesson = lessonList[index]
                 val imageName = "picture${index + 1}"
@@ -105,10 +118,10 @@ class LessonActivity : AppCompatActivity() {
                 // Создаем карточку
                 val cardView = CardView(this@LessonActivity).apply {
                     layoutParams = LinearLayout.LayoutParams(
-                        975,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     ).apply {
-                        setMargins(60, 0, 50, 64)
+                        setMargins(20, 0, 20, 32)
                     }
                     radius = 24f
                     cardElevation = 0f  // Убираем тень
@@ -118,8 +131,8 @@ class LessonActivity : AppCompatActivity() {
                 // Создаем макет содержимого карточки
                 val cardContent = LinearLayout(this@LessonActivity).apply {
                     orientation = LinearLayout.HORIZONTAL
-                    setPadding(30, 30, 30, 30)
-            }
+                    setPadding(16, 16, 16, 16)
+                }
 
                 // Добавляем изображение
                 val imageView = ImageView(this@LessonActivity).apply {
@@ -147,9 +160,8 @@ class LessonActivity : AppCompatActivity() {
                 }
 
                 val titleTimeView = TextView(this@LessonActivity).apply {
-                    //ВСТАВИТЬ МИНУТЫ
                     text = "10 МИНУТ"
-                    textSize = 12f
+                    textSize = 14f
                     setTypeface(null, Typeface.NORMAL)
                     setPadding(4, 4, 4, 4)
                     layoutParams = LinearLayout.LayoutParams(
@@ -175,9 +187,9 @@ class LessonActivity : AppCompatActivity() {
                 timeCardContent.addView(titleEmptyView)
                 textLayout.addView(timeCardContent)
 
-                // Добавляем текстовое поле для названия
+                // Переименовываем занятия
                 val titleTextView = TextView(this@LessonActivity).apply {
-                    text = lesson.titleOfLesson
+                    text = "Занятие ${index + 1}"  // Переименовываем на "Занятие 1", "Занятие 2" и т.д.
                     textSize = 20f
                     setTypeface(null, Typeface.BOLD)
                     setPadding(0, 16, 0, 8)
@@ -202,9 +214,7 @@ class LessonActivity : AppCompatActivity() {
                             cornerRadius = 16f
                             setColor(Color.LTGRAY)  // Серый фон для неактивной кнопки
                         }
-                    }
-                    else
-                    {
+                    } else {
                         text = "Перейти"
                         setBackgroundColor(Color.parseColor("#2E4052"))  // Устанавливаем цвет фона
                         setTextColor(Color.WHITE)  // Устанавливаем цвет текста
@@ -241,7 +251,6 @@ class LessonActivity : AppCompatActivity() {
                 textLayout.addView(button)
 
                 // Добавляем изображение и текстовый макет в содержимое карточки
-
                 cardContent.addView(textLayout)
                 cardContent.addView(imageView)
 
@@ -251,6 +260,7 @@ class LessonActivity : AppCompatActivity() {
                 // Добавляем карточку в контейнер
                 cardContainer.addView(cardView)
             }
+
         }
     }
     suspend fun getMatchingLessonIds(

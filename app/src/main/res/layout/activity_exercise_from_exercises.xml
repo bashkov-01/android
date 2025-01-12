@@ -8,6 +8,21 @@
     android:backgroundTint="#FFFFFF">
 
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:text="Упражнение"
+        android:textColor="@color/textColor"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button2"
         android:layout_width="163dp"
@@ -22,12 +37,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.866" />
+        app:layout_constraintVertical_bias="0.959" />
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="325dp"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/inter"
         android:text="TextView"
         android:textColor="@color/textColor"
@@ -37,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintVertical_bias="0.426" />
 
     <TextView
         android:id="@+id/textViewDescription"
@@ -52,19 +67,19 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.802" />
 
     <View
         android:id="@+id/view"
-        android:layout_width="5dp"
-        android:layout_height="77dp"
+        android:layout_width="6dp"
+        android:layout_height="45dp"
         android:background="#2E4052"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.383" />
+        app:layout_constraintVertical_bias="0.428" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="358dp"
@@ -86,5 +101,18 @@
             android:scaleType="fitCenter"
             tools:srcCompat="@tools:sample/avatars" />
     </androidx.cardview.widget.CardView>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.041"
+        app:srcCompat="@drawable/img_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

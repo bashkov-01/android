@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,8 @@ class ExerciseActivityFromExercises : AppCompatActivity() {
     private lateinit var textViewDescription: TextView
     private lateinit var button: Button
     private lateinit var gifImageView: ImageView
+    private lateinit var textViewExercise: TextView
+    private lateinit var buttonBack: ImageButton
     private var lessonId = 0
 
     private var currentExerciseIndex = 0  // Текущий индекс упражнения
@@ -29,6 +32,7 @@ class ExerciseActivityFromExercises : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
     private var isPaused = false // Флаг паузы
     private var timeLeftInMillis: Long = 0 // Оставшееся время на таймере
+    private var countExercicesString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,20 +41,32 @@ class ExerciseActivityFromExercises : AppCompatActivity() {
         gifImageView = findViewById(R.id.gifImage)
         textViewTitle = findViewById(R.id.textViewTitle)
         textViewDescription = findViewById(R.id.textViewDescription)
+        textViewExercise = findViewById(R.id.textView4)
+        buttonBack = findViewById(R.id.imageButton2)
         button = findViewById(R.id.button2)
 
         // Получаем id занятия, переданный через Intent
         lessonId = intent.getIntExtra("lesson_id_from_exercises", -1)
 
+        buttonBack.setOnClickListener {
+            stopAudio()
+            val intent = Intent(this@ExerciseActivityFromExercises, ExercisesActivity::class.java)
+            startActivity(intent)
+        }
+
         if (lessonId != -1) {
             val exerciseDao = MainDb.getDb(this).exerciseDao()
+//            val countExercices = exerciseDao.getCountOfExercises()
+
 
             // Загружаем упражнения по lessonId
             GlobalScope.launch(Dispatchers.Main) {
-                exercises = exerciseDao.getExercisesByLessonId(lessonId)
+                val countExercices = exerciseDao.getCountOfExercises()
+                countExercicesString = countExercices.toString()
+                exercises = exerciseDao.getExercisesById(lessonId)
 
                 if (exercises.isNotEmpty()) {
-                    showExercise(currentExerciseIndex)
+                    showExercise(0) // Показать первое упражнение
 
                     button.setOnClickListener {
                         handleButtonClick()
@@ -60,58 +76,37 @@ class ExerciseActivityFromExercises : AppCompatActivity() {
         }
     }
 
-    //    Этот метод обрабатывает нажатия на кнопку.
-    //    В зависимости от состояния таймера выполняется одно из следующих действий:
-    //Если таймер запущен и не на паузе, он ставится на паузу.
-    //Если таймер на паузе, он возобновляется.
-    //Если таймер не был запущен, он запускается для текущего упражнения.
-    //Если таймер завершён, переход к следующему упражнению.
     private fun handleButtonClick() {
         when {
             isTimerRunning && !isPaused -> {
-                // Поставить на паузу
                 pauseExerciseTimer()
             }
             isPaused -> {
-                // Возобновить таймер
                 resumeExerciseTimer()
             }
             timer == null -> {
-                // Запустить таймер впервые
                 val time = exercises[currentExerciseIndex].timerOfExercise
                 startExerciseTimer(time)
             }
-//            else -> {
-//                // Если таймер завершён, перейти к следующему упражнению
-//                moveToNextExercise()
-//            }
         }
     }
 
-    //Останавливает таймер и ставит флаг паузы в true.
-    // Меняет текст кнопки на "Продолжить" и останавливает воспроизведение аудио.
     private fun pauseExerciseTimer() {
         timer?.cancel()
         isPaused = true
         isTimerRunning = false
         button.text = "Продолжить"
     }
-    //Возобновляет таймер с оставшегося времени, меняет флаг состояния таймера на активный и запускает аудио.
+
     private fun resumeExerciseTimer() {
-        startExerciseTimer(timeLeftInMillis / 1000) // Возобновляем с оставшегося времени
+        startExerciseTimer(timeLeftInMillis / 1000)
         isPaused = false
         isTimerRunning = true
         stopAudio()
-
-//        playAudio()
     }
 
-    //Запускает новый таймер для упражнения с заданным временем в секундах.
-    //В процессе работы таймера каждую секунду обновляется текст на кнопке с оставшимся временем,
-    //а по завершению таймер останавливается, текст кнопки меняется на "Далее",
-    //и воспроизведение аудио останавливается. После этого происходит переход к следующему упражнению.
     private fun startExerciseTimer(timeInSeconds: Long) {
-        timer?.cancel() // Останавливаем предыдущий таймер
+        timer?.cancel()
         isTimerRunning = true
         isPaused = false
         button.text = "Пауза"
@@ -120,13 +115,13 @@ class ExerciseActivityFromExercises : AppCompatActivity() {
 
         timer = object : CountDownTimer(timeInSeconds * 1000L, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                timeLeftInMillis = millisUntilFinished // Сохраняем оставшееся время
+                timeLeftInMillis = millisUntilFinished
                 val secondsLeft = millisUntilFinished / 1000
                 button.text = formatTime(secondsLeft.toInt())
             }
 
             override fun onFinish() {
-                button.text = "Далее" // Меняем текст на кнопке
+                button.text = "Далее"
                 isTimerRunning = false
                 timer = null
                 stopAudio()
@@ -140,57 +135,64 @@ class ExerciseActivityFromExercises : AppCompatActivity() {
         dialogBuilder.setTitle("Упражнение завершено")
             .setMessage("Поздравляем! Вы успешно завершили упражнение.")
             .setPositiveButton("ОК") { dialog, _ ->
-                dialog.dismiss() // Закрыть диалог
-                val intent = Intent(this@ExerciseActivityFromExercises, ExercisesActivity::class.java)
-                startActivity(intent)
+                dialog.dismiss()
+                moveToNextExercise()
             }
-            .setCancelable(false) // Блокировка закрытия окна вне кнопки
+            .setCancelable(false)
 
         val alertDialog = dialogBuilder.create()
         alertDialog.show()
     }
 
+    private fun moveToNextExercise() {
+        currentExerciseIndex++
+        if (currentExerciseIndex < exercises.size) {
+            showExercise(currentExerciseIndex)
+        } else {
+            finishActivity()
+        }
+    }
 
-    //Форматирует оставшееся время (в секундах) в строку в формате "минуты:секунды", например, "02:30".
+    private fun finishActivity() {
+        val intent = Intent(this@ExerciseActivityFromExercises, ExercisesActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun formatTime(seconds: Int): String {
         val minutes = seconds / 60
         val secs = seconds % 60
         return String.format("%02d:%02d", minutes, secs)
     }
 
-    //Загружает и воспроизводит аудиофайл для текущего упражнения.
-    //Аудиофайл указывается в свойствах soundOfExercise объекта Exercise, и его путь преобразуется в URI,
-    //чтобы использовать его через MediaPlayer.
     private fun playAudio() {
         val exercise = exercises[currentExerciseIndex]
         val audioResource = exercise.soundOfExercise
             .substringBefore(".")
-            .substringAfter("app/src/main/res/raw/")  // Извлекаем имя файла
+            .substringAfter("app/src/main/res/raw/")
 
         val audioUri = "android.resource://${packageName}/raw/$audioResource"
         mediaPlayer = MediaPlayer.create(this, Uri.parse(audioUri))
-        mediaPlayer?.start() // Запуск аудио
+        mediaPlayer?.start()
     }
 
-    //Останавливает воспроизведение аудио и освобождает ресурсы, связанные с MediaPlayer.
     private fun stopAudio() {
         mediaPlayer?.stop()
-        mediaPlayer?.release() // Освобождаем ресурсы
+        mediaPlayer?.release()
         mediaPlayer = null
     }
 
-    //Отображает данные текущего упражнения на экране:
-    //Название и описание упражнения.
-    //Анимацию в формате GIF, используя библиотеку Glide для загрузки и отображения.
-    //Кнопка получает текст "Начать", и таймер сбрасывается.
     private fun showExercise(index: Int) {
         val exercise = exercises[index]
+
+        textViewExercise.text = "Упражнение ${exercise.id} из ${countExercicesString}"
+
         textViewTitle.text = exercise.titleOfExercise
         textViewDescription.text = exercise.descriptionOfExercise
 
         val gifResource = exercise.animationOfExercise
             .substringBefore(".")
-            .substringAfter("app/src/main/res/raw/")  // Извлекаем имя файла
+            .substringAfter("app/src/main/res/raw/")
 
         Glide.with(this@ExerciseActivityFromExercises)
             .asGif()
@@ -198,7 +200,7 @@ class ExerciseActivityFromExercises : AppCompatActivity() {
             .into(gifImageView)
 
         button.text = "Начать"
-        timer = null // Сбрасываем таймер
+        timer = null
         stopAudio()
     }
 }

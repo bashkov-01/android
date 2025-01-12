@@ -1,7 +1,9 @@
 package com.example.android_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -23,9 +25,15 @@ class StatistikaActivity : AppCompatActivity() {
     private lateinit var sbView: View
     private lateinit var vsView: View
 
+//    buttonMain
+//    buttonExercise
+//    buttonStatistic
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistika)
+
+        val buttonMain = findViewById<ImageButton>(R.id.buttonMain)
+        val buttonExercise = findViewById<ImageButton>(R.id.buttonExercise)
 
         pnView = findViewById(R.id.pnView)
         vtView = findViewById(R.id.vtView)
@@ -34,6 +42,17 @@ class StatistikaActivity : AppCompatActivity() {
         ptView = findViewById(R.id.ptView)
         sbView = findViewById(R.id.sbView)
         vsView = findViewById(R.id.vsView)
+
+        buttonMain.setOnClickListener {
+            val intent = Intent(this@StatistikaActivity, LessonActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonExercise.setOnClickListener {
+            val intent = Intent(this@StatistikaActivity, ExercisesActivity::class.java)
+            startActivity(intent)
+        }
+
 
         lifecycleScope.launch {
             val statsMap = getWeeklyStats()

@@ -171,9 +171,21 @@ class ExerciseActivity : AppCompatActivity() {
             .substringAfter("app/src/main/res/raw/")  // Извлекаем имя файла
 
         val audioUri = "android.resource://${packageName}/raw/$audioResource"
-        mediaPlayer = MediaPlayer.create(this, Uri.parse(audioUri))
-        mediaPlayer?.start() // Запуск аудио
+        Log.d("AudioPlay", "Audio file path: $audioUri") // Логирование пути к аудиофайлу
+
+        try {
+            mediaPlayer = MediaPlayer.create(this, Uri.parse(audioUri))
+            mediaPlayer?.setOnErrorListener { mp, what, extra ->
+                Log.e("AudioPlay", "Error occurred during audio playback: what=$what, extra=$extra")
+                return@setOnErrorListener true
+            }
+            mediaPlayer?.start()
+            Log.d("AudioPlay", "Audio started")
+        } catch (e: Exception) {
+            Log.e("AudioPlay", "Error while creating media player: ${e.message}")
+        }
     }
+
 
     //Останавливает воспроизведение аудио и освобождает ресурсы, связанные с MediaPlayer.
     private fun stopAudio() {

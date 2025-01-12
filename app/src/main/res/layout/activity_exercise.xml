@@ -27,7 +27,7 @@
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="325dp"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/inter"
         android:text="TextView"
         android:textColor="@color/textColor"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintVertical_bias="0.423" />
 
     <TextView
         android:id="@+id/textViewDescription"
@@ -49,22 +49,22 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.804" />
 
     <View
         android:id="@+id/view"
-        android:layout_width="5dp"
-        android:layout_height="77dp"
+        android:layout_width="6dp"
+        android:layout_height="45dp"
         android:background="#2E4052"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.383" />
+        app:layout_constraintVertical_bias="0.421" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

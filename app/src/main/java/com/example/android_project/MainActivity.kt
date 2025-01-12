@@ -3,19 +3,14 @@ package com.example.android_project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.lifecycleScope
-import com.example.android_project.dao.ExerciseDao
-import com.example.android_project.models.Exercise
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
+
+//        MessagingUtils().logToken()
 
         val intent = Intent(this@MainActivity, LessonActivity::class.java)
         startActivity(intent)

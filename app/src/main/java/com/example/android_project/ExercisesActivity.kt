@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -18,6 +19,19 @@ class ExercisesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_exercises)
+
+        val buttonMain = findViewById<ImageButton>(R.id.buttonMain)
+        val buttonStatistic = findViewById<ImageButton>(R.id.buttonStatistic)
+
+        buttonMain.setOnClickListener {
+            val intent = Intent(this@ExercisesActivity, LessonActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonStatistic.setOnClickListener {
+            val intent = Intent(this@ExercisesActivity, StatistikaActivity::class.java)
+            startActivity(intent)
+        }
 
         val cardContainer = findViewById<LinearLayout>(R.id.cardContainerAll)  // Контейнер для карточек
         val db = MainDb.getDb(applicationContext)
@@ -76,7 +90,7 @@ class ExercisesActivity : AppCompatActivity() {
                 }
                 // Добавляем название
                 val titleTextView = TextView(this@ExercisesActivity).apply {
-                    text = exercise.titleOfExercise // Здесь вы можете использовать поле из вашей базы данных для названия
+                    text = exercise.titleOfExercise.toString() // Здесь вы можете использовать поле из вашей базы данных для названия
                     textSize = 20f
                     setTypeface(null, Typeface.BOLD)
                     setTextColor(getColor(R.color.textColor))
@@ -85,6 +99,7 @@ class ExercisesActivity : AppCompatActivity() {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         3f  // Вес 1 для выравнивания по левому краю
                     )
+                    setPadding(20, 20, 0, 0)
                 }
                 // Добавляем тайминг
                 val timeTextView = TextView(this@ExercisesActivity).apply {
@@ -97,6 +112,7 @@ class ExercisesActivity : AppCompatActivity() {
                         1f  // Вес 1 для выравнивания по правому краю
                     )
                     textAlignment = TextView.TEXT_ALIGNMENT_VIEW_END
+                    setPadding(0, 0, 25, 0)
                 }
                 // Добавляем описание
                 val descriptionTextView = TextView(this@ExercisesActivity).apply {
@@ -108,8 +124,13 @@ class ExercisesActivity : AppCompatActivity() {
                         0,
                         2f  // Вес 3 для описания
                     )
-                    setPadding(0, 0, 0, 16)
+                    setPadding(20, 0, 0, 16)
                 }
+
+//                descriptionTextView.text = "${descriptionTextView.text.take(80)} ..."
+                if(descriptionTextView.text.length > 80)
+                    descriptionTextView.text = "${descriptionTextView.text.take(70)} ..."
+                else descriptionTextView.text = descriptionTextView.text
 
                 // Добавляем все элементы в горизонтальный макет
                 textLayout.addView(titleTextView)
@@ -120,6 +141,7 @@ class ExercisesActivity : AppCompatActivity() {
                     val intent = Intent(this@ExercisesActivity, ExerciseActivityFromExercises::class.java)
                     intent.putExtra("lesson_id_from_exercises", exercise.id)  // Передаем id упражнения
                     startActivity(intent)
+
                 }
 
                 // Добавляем текстовый макет и изображение в содержимое карточки

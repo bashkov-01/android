@@ -5,36 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backColor"
-    android:backgroundTint="@color/backColor">
-
-    <EditText
-        android:id="@+id/textDateOfBirth"
-        android:layout_width="370dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/white"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:fontFamily="@font/inter"
-        android:inputType="text"
-        android:text="dd.mm.yyyy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186" />
+    android:backgroundTint="@color/backColor"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="153dp">
 
     <Spinner
         android:id="@+id/listExerciseLoad"
         android:layout_width="370dp"
         android:layout_height="49dp"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="16dp"
         android:background="@color/black"
         android:backgroundTint="#FFFFFF"
         android:backgroundTintMode="add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.316" />
+        app:layout_constraintVertical_bias="0.179" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
@@ -54,8 +40,8 @@
 
     <Spinner
         android:id="@+id/listCategory"
-        android:layout_width="361dp"
-        android:layout_height="49dp"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="30dp"
@@ -63,9 +49,10 @@
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.662" />
+        app:layout_constraintVertical_bias="0.516" />
 
     <TextView
         android:id="@+id/textViewCategory"
@@ -82,11 +69,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.579" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <Spinner
         android:id="@+id/listStrobism"
-        android:layout_width="364dp"
+        android:layout_width="370dp"
         android:layout_height="48dp"
         android:layout_marginStart="13dp"
         android:background="@color/white"
@@ -95,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintVertical_bias="0.661" />
 
     <TextView
         android:id="@+id/textViewCountOfTime"
@@ -113,7 +100,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" />
+        app:layout_constraintVertical_bias="0.255" />
 
     <TextView
         android:id="@+id/textViewStrobism"
@@ -130,7 +117,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.741" />
+        app:layout_constraintVertical_bias="0.593" />
 
     <Spinner
         android:id="@+id/listCountOfTime"
@@ -147,7 +134,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472" />
+        app:layout_constraintVertical_bias="0.347" />
 
     <TextView
         android:id="@+id/textViewDateOfbirth"
@@ -171,7 +158,7 @@
         android:id="@+id/textViewExerciseLoad1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="16dp"
         android:fontFamily="@font/inter"
         android:text="Вид нагрузки:"
         android:textColor="@color/textColor"
@@ -179,38 +166,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.253" />
-
-    <TextView
-        android:id="@+id/textViewExerciseLoad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="235dp"
-        android:fontFamily="@font/inter"
-        android:text="Дата рождения:"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.138" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="7dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="aksj"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.187"
-        app:srcCompat="@drawable/img" />
+        app:layout_constraintVertical_bias="0.116" />
 
     <ImageButton
         android:id="@+id/imageButton4"
@@ -226,5 +182,53 @@
         app:layout_constraintVertical_bias="0.057"
         app:srcCompat="@drawable/img_1"
         tools:ignore="TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361"
+        app:srcCompat="@drawable/arrow_bottom" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.662"
+        app:srcCompat="@drawable/arrow_bottom" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.525"
+        app:srcCompat="@drawable/arrow_bottom" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.193"
+        app:srcCompat="@drawable/arrow_bottom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

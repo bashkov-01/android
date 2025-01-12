@@ -12,6 +12,9 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM exercise WHERE lessonId = :lessonId")
     suspend fun getExercisesByLessonId(lessonId: Int): List<Exercise>
+
+    @Query("SELECT * FROM exercise WHERE id = :exerciseId")
+    suspend fun getExercisesById(exerciseId: Int): List<Exercise>
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    suspend fun insertExercise(exercise: com.example.android_project.models.Exercise): Long
 
@@ -33,4 +36,7 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM exercise")
     suspend fun getAllExercises(): List<Exercise>
+
+    @Query("SELECT COUNT(*) FROM exercise")
+    suspend fun getCountOfExercises(): Int
 }
